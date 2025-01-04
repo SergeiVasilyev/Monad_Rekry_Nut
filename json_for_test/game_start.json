@@ -1,0 +1,31 @@
+{
+    "gameId": "a212f51c-31f1-4d43-914f-e3a2b5254889",
+    "status": {
+        "card": 25,
+        "money": 0,
+        "players": [
+            {
+                "money": 11,
+                "cards": [],
+                "name": "SergeiVasilyev"
+            },
+            {
+                "money": 11,
+                "cards": [],
+                "name": "KorttiGPT 9000"
+            },
+            {
+                "money": 11,
+                "cards": [],
+                "name": "BittiBotti-6000"
+            },
+            {
+                "money": 11,
+                "cards": [],
+                "name": "RoboRuntunen A1"
+            }
+        ],
+        "cardsLeft": 24,
+        "finished": false
+    }
+}

@@ -1,0 +1,38 @@
+{
+    "status": {
+        "card": 31,
+        "money": 1,
+        "players": [
+            {
+                "money": 3,
+                "cards": [
+                    [1, 2], [13], [16, 17], [33]
+                ],
+                "name": "SergeiVasilyev"
+            },
+            {
+                "money": 36,
+                "cards": [
+                    [7], [9], [20], [26, 27]
+                ],
+                "name": "KorttiGPT 9000"
+            },
+            {
+                "money": 5,
+                "cards": [
+                    [3], [30, 31]
+                ],
+                "name": "BittiBotti-6000"
+            },
+            {
+                "money": 1,
+                "cards": [
+                    [10, 11]
+                ],
+                "name": "RoboRuntunen A1"
+            }
+        ],
+        "cardsLeft": 22,
+        "finished": false
+    }
+}
