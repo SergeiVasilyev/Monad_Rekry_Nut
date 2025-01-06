@@ -37,8 +37,8 @@ class Player:
         Calculate the difference between the current card on the table and the card closest to it in the player's hand.
         The difference is calculated as the absolute difference between the two cards. If the player has multiple cards in their hand with the same difference to the table card, the difference of the first card in the first group of cards is used. If the player has no cards in their hand, the difference is set to 0.
         """
+        self._delta = 0
         if len(self.cards) != 0:
-            self._delta = 0
             for group_of_cards in self.cards:
                 for card in [group_of_cards[0], group_of_cards[-1]]:
                     card_difference = table_card - card
@@ -64,22 +64,28 @@ class BotPlayer(Player):
         """The function compares players deltas and the bot delta.
         Returns False if one of the players' delta is closer to zero.
         """
+        if self.calculate_delta == 0:
+            return False
+        
         for player_delta in players_deltas:
             if (self.calculate_delta > 0 and player_delta > 0 and self.calculate_delta > player_delta) or (self.calculate_delta < 0 and player_delta < 0 and self.calculate_delta < player_delta):
                 return False
+            
         return True
 
 
     def decide(self, table_card: int, table_money: int, cards_left: int, players_deltas: List[int], players_money: List[int]) -> bool:
+
+        # Check if BotPlayer has cards [16, 17] and on the table card 19 (delta = 2) and someone has card 18 (delta = 1), then BotPlayer should bet
         check_if_bot_delta_less_then_other_players_delta = self.compare_deltas(players_deltas)
 
         # if it's the first move in the game
-        if cards_left == 24 and table_card <= 24 and table_money > 1:
+        if cards_left == 24 and table_card <= 24 and table_money > 3:
             print("If first table card is less than 24 and table money is more than 1")
             return True
         
         # if it's the first move in the game and card is less or equal 10
-        if cards_left == 24 and table_card <= 10:
+        if cards_left == 24 and table_card <= 15 and table_money > 1:
             print("If first card is less than 10")
             return True
 
@@ -89,7 +95,7 @@ class BotPlayer(Player):
             return True
         
         # Bet if there is no money on the table.
-        if (table_money == 0 and self.money > 0 and cards_left > 8 and table_card > 10):
+        if (table_money < 2 and self.money > 0 and table_card > 10 and self.calculate_delta != -1): #  and cards_left > 8
             print("Place a bet")
             return False
         
@@ -103,9 +109,13 @@ class BotPlayer(Player):
             print("Take a card if the card is in the range calculated by the formula (cards_left//8)+1", self.calculate_delta, " <= ", (cards_left//8)+1)
             return True
         
-        # Take any card if there are no cards available yet and there is more than 7 money on the table.
-        if cards_left < 24 and table_money > 7 and self.cards == []:
-            print("Take any card if there are no cards available yet and there is more than 7 money on the table.")
+        # Take any card if there are no cards available yet and there is more than 5 money on the table.
+        if cards_left < 24 and table_money >= 5 and self.cards == []:
+            print("Take any card if there are no cards available yet and there is more than 5 money on the table.")
+            return True
+        
+        if table_card > 20 and table_money / table_card > (0.3+(0.46-0.3)*(table_card-3)/(35-3)):
+            print("Take card if on the table a lot of money")
             return True
         
         # Take a card if there is no money in the pocket
