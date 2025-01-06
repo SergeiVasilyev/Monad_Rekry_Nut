@@ -51,3 +51,9 @@ class MonadCardGameAPI():
             return response.json()
         except requests.exceptions.RequestException as e:
             raise Exception(f"Error making the step: {e}")
+        
+
+if __name__ == "__main__":
+    api = MonadCardGameAPI("https://api.monadcard.com", "your_api_token", False)
+    game = api.start_game()
+    print(game)
