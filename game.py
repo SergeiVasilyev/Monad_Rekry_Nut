@@ -61,18 +61,15 @@ class Game:
     def turn(self, pause: bool = False):
         print("----------------Turn----------------")
         print(f"On the table card: {self.table_card}, money: {self.table_money}, Cards left: {self.cardsLeft}")
-        print(f"{self.bot_player.name} (Money: {self.bot_player.money}, Cards: {self.bot_player.cards}, Score: {self.bot_player.score}, Delta: {self.bot_player.calculate_delta})")
+        print(f"{self.bot_player.name} (Money: {self.bot_player.money}, Cards: {self.bot_player.cards}, Score: {self.bot_player.score}, Delta: {self.bot_player.min_delta})")
 
         for player in self.players:
-            print(f"{player.name} (Money: {player.money}, Cards: {player.cards}, Score: {player.score})")
+            print(f"{player.name} (Money: {player.money}, Cards: {player.cards}, Score: {player.score}), Delta: {player.min_delta})")
 
         if pause:
             _ = input("Press enter to continue") # Waiting for tests
-        
-        players_delatas = [player.calculate_delta for player in self.players]
-        players_monyes = [player.money for player in self.players]
 
-        take_card = self.bot_player.decide(self.table_card, self.table_money, self.cardsLeft, players_delatas, players_monyes)
+        take_card = self.bot_player.decide(self.table_card, self.table_money, self.cardsLeft, self.players)
 
         game_state = self.api_data.action(self.game_id, {"takeCard": take_card})
 
@@ -82,11 +79,8 @@ class Game:
 
     def play(self):
         print("Welcome to the game!")
-        pause_answer = input("Do you want to pause, after each turn? (y/n) ")
-        if pause_answer == "y":
-            pause = True
-        else:
-            pause = False
+        pause_answer = input("Do you want to pause, after each turn? (y/n) ").lower()
+        pause = True if pause_answer == "y" else False
 
         self.start()
         while not self.finished:
@@ -97,6 +91,9 @@ class Game:
         print(f"{self.bot_player.name}, Score: {self.bot_player.score})")
         for player in self.players:
             print(f"{player.name}, Score: {player.score})")
+        
+        players = self.players + [self.bot_player]
+        print("Winner is : ", min(players, key=lambda x: x.score).name)
 
 
 
