@@ -1,5 +1,4 @@
 import os
-from functools import reduce
 from typing import List, Optional
 from dotenv import load_dotenv
 from game_api import MonadCardGameAPI
