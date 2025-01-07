@@ -3,7 +3,6 @@ import json
 from typing import Dict, Any
 
 
-
 class MonadCardGameAPI():
     """Class for interacting with the game API."""
 
@@ -41,7 +40,7 @@ class MonadCardGameAPI():
         """
 
         if not self.api_connect:
-            with open("json_for_test/game_step-01.json") as f:
+            with open("json_for_test/game_step-03.json") as f:
                 self.data = json.load(f)
             return self.data
 
@@ -52,8 +51,3 @@ class MonadCardGameAPI():
         except requests.exceptions.RequestException as e:
             raise Exception(f"Error making the step: {e}")
         
-
-if __name__ == "__main__":
-    api = MonadCardGameAPI("https://api.monadcard.com", "your_api_token", False)
-    game = api.start_game()
-    print(game)
