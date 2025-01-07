@@ -81,7 +81,6 @@ class BotPlayer(Player):
 
     def decide(self, table_card: int, table_money: int, cards_left: int, players: List[dict]) -> bool:
         is_possible_to_collect_series = self.is_possible_to_collect_series(players)
-        print(f"is_possible_to_collect_series: {is_possible_to_collect_series}")
 
         players_min_delatas = [player.min_delta for player in players]
         players_money = [player.money for player in players]
@@ -98,7 +97,6 @@ class BotPlayer(Player):
 
         # if the card is important for the BotPlayer and one of other player
         if abs(self.min_delta) == 1 and (1 in list(map(abs, players_min_delatas)) or 0 in players_money):
-            print(self.min_delta, players_min_delatas)
             print("If card important for BotPlayer and one of other player, or one of opponent has no money")
             return True
         

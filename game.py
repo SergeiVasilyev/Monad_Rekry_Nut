@@ -93,7 +93,7 @@ class Game:
             print(f"{player.name}, Score: {player.score})")
         
         players = self.players + [self.bot_player]
-        print("Winner is : ", min(players, key=lambda x: x.score).name)
+        print("Winner is: ", min(players, key=lambda x: x.score).name)
 
 
 
